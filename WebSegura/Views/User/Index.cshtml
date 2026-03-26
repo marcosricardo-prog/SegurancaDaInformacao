@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Usuários";
+}
+
+<div class="page-card user">
+    <div class="page-header">
+        <div class="page-icon">👤</div>
+        <h1>Página de acesso restrito aos usuários comuns</h1>
+        <p>Bem-vindo, <strong>@ViewBag.Username</strong></p>
+    </div>
+
+    <div class="page-content">
+        <div class="info-box">
+            <strong>Área do Usuário</strong>
+            <p>Você está autenticado como <strong>Usuário Comum</strong>.</p>
+        </div>
+    </div>
+
+    @* CSRF obrigatório mesmo no logout *@
+    <form method="post" action="/logout" asp-antiforgery="true" class="logout-form">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger">Encerrar Sessão</button>
+    </form>
+</div>

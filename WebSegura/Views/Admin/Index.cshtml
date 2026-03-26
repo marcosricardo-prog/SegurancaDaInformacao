@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Administradores";
+}
+
+<div class="page-card admin">
+    <div class="page-header">
+        <div class="page-icon">🛡️</div>
+        <h1>Página de acesso restrito aos usuários administradores</h1>
+        <p>Bem-vindo, <strong>@ViewBag.Username</strong></p>
+    </div>
+
+    <div class="page-content">
+        <div class="info-box">
+            <strong>Área Administrativa</strong>
+            <p>Você está autenticado como <strong>Administrador</strong>.</p>
+        </div>
+        <div class="nav-links">
+            <a href="/cadastro" class="btn btn-secondary">📋 Gerenciar Cadastro</a>
+        </div>
+    </div>
+
+    @* Token CSRF obrigatório mesmo no logout *@
+    <form method="post" action="/logout" asp-antiforgery="true" class="logout-form">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger">Encerrar Sessão</button>
+    </form>
+</div>

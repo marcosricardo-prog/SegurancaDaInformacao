@@ -1,0 +1,39 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="auth-card">
+    <div class="auth-header">
+        <div class="auth-icon">🔐</div>
+        <h1>WebSegura</h1>
+        <p>Sistema de Autenticação Segura</p>
+    </div>
+
+    @if (Model.ErrorMessage != null)
+    {
+        <div class="alert alert-error">⚠️ @Model.ErrorMessage</div>
+    }
+
+    @* Token CSRF gerado automaticamente pelo tag helper asp-antiforgery *@
+    <form method="post" action="/login" asp-antiforgery="true">
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label for="username">Usuário</label>
+            <input type="text" id="username" name="username"
+                   placeholder="Digite seu usuário"
+                   maxlength="100" autocomplete="username"
+                   value="@Model.Username" required />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password"
+                   placeholder="Digite sua senha"
+                   maxlength="200" autocomplete="current-password" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Entrar</button>
+    </form>
+</div>

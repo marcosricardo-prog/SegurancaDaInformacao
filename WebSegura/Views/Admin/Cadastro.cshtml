@@ -1,0 +1,88 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Cadastro de Usuários";
+}
+
+<div class="page-card admin">
+    <div class="page-header">
+        <div class="page-icon">👤</div>
+        <h1>Cadastro de Usuários</h1>
+        <p>Gerencie os usuários do sistema</p>
+    </div>
+
+    @if (Model.ErrorMessage != null)
+    {
+        <div class="alert alert-error">⚠️ @Model.ErrorMessage</div>
+    }
+    @if (Model.SuccessMessage != null)
+    {
+        <div class="alert alert-success">✅ @Model.SuccessMessage</div>
+    }
+
+    @* CSRF token gerado pelo helper — valida autenticidade do formulário *@
+    <form method="post" action="/cadastro" asp-antiforgery="true" class="register-form">
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label for="username">Usuário</label>
+            <input type="text" id="username" name="username"
+                   placeholder="Nome de usuário" maxlength="100"
+                   value="@Model.Username" required />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password"
+                   placeholder="Senha" maxlength="200" required />
+        </div>
+
+        <div class="form-group">
+            <label for="role">Tipo de Usuário</label>
+            <select id="role" name="role">
+                <option value="user" selected="@(Model.Role == "user")">Usuário Comum</option>
+                <option value="admin" selected="@(Model.Role == "admin")">Usuário Administrador</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar Usuário</button>
+    </form>
+
+    @if (Model.Users.Any())
+    {
+        <div class="users-table-section">
+            <h2>Usuários Cadastrados</h2>
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuário</th>
+                        <th>Papel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var u in Model.Users)
+                    {
+                        <tr>
+                            <td>@u.Id</td>
+                            <td>@u.Username</td>
+                            <td>
+                                <span class="badge @(u.Role == "admin" ? "badge-admin" : "badge-user")">
+                                    @(u.Role == "admin" ? "Administrador" : "Usuário Comum")
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="nav-links" style="margin-top: 1.5rem;">
+        <a href="/administradores" class="btn btn-secondary">← Voltar</a>
+    </div>
+
+    <form method="post" action="/logout" asp-antiforgery="true" class="logout-form">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger">Encerrar Sessão</button>
+    </form>
+</div>
