@@ -1,0 +1,19 @@
+<manifest package="com.example.secureapp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:allowBackup="false"
+        android:label="SecureApp"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar">
+        <activity
+                android:name=".MainActivity"
+                android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
+    </application>
+</manifest>
